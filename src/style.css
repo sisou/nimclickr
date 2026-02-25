@@ -1,0 +1,67 @@
+/* ============================================================
+   NimClickr — Global Cyberpunk Styles
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #0a0a0f;
+  --cyan: #00f5ff;
+  --purple: #bf5af2;
+  --text: #c8c8e8;
+  --text-dim: #555577;
+  --surface: #0d0d1a;
+  --border: #1a1a2e;
+}
+
+html {
+  height: 100%;
+  /* Prevent pull-to-refresh on mobile */
+  overscroll-behavior: none;
+}
+
+body {
+  height: 100%;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Courier New', Courier, monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Prevent text selection on rapid taps */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#app {
+  height: 100%;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #222244;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #333366;
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+</style>
