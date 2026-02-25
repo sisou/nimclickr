@@ -8,13 +8,14 @@ import type { BuildingId } from '../types'
 const store = useGameStore()
 
 const rows = computed(() =>
-  BUILDINGS.map((b) => {
-    const owned = store.buildings[b.id].owned
-    const cost = buildingCost(b.baseCost, owned)
-    const canAfford = store.transactions >= cost
-    const tpsContrib = owned * b.baseTps * store.buildingMultipliers[b.id]
-    return { ...b, owned, cost, canAfford, tpsContrib }
-  }),
+  BUILDINGS.filter((b) => store.totalTransactions >= b.baseCost * 0.5 || store.buildings[b.id].owned > 0)
+    .map((b) => {
+      const owned = store.buildings[b.id].owned
+      const cost = buildingCost(b.baseCost, owned)
+      const canAfford = store.transactions >= cost
+      const tpsContrib = owned * b.baseTps * store.buildingMultipliers[b.id]
+      return { ...b, owned, cost, canAfford, tpsContrib }
+    }),
 )
 
 function buy(id: BuildingId) {
