@@ -1,5 +1,5 @@
 # NimClickr — Blockchain Clicker Game
-## Design Document
+## Implementation Plan
 _Date: 2026-02-25_
 
 ---
@@ -21,18 +21,49 @@ Stack: Vue 3 + Pinia + Vite + TypeScript, pure CSS (cyberpunk/neon aesthetic).
 - Main display metric: current TPS (large, prominent)
 
 ### Buildings
-| ID          | Name          | Base cost | TPS/unit |
-|-------------|---------------|-----------|----------|
-| wallet      | Wallet        | 10 tx     | 0.1      |
-| dapp        | DApp          | 100 tx    | 1        |
-| validator   | Validator Node| 1,000 tx  | 10       |
-| mining_pool | Mining Pool   | 10,000 tx | 100      |
+| ID           | Name        | Base cost    | TPS/unit | Thematic rationale                              |
+|--------------|-------------|--------------|----------|-------------------------------------------------|
+| wallet       | Wallet      | 10 tx        | 0.1      | You sign transactions manually                  |
+| faucet       | Faucet      | 100 tx       | 0.5      | Drips free tokens → each drip is a transaction  |
+| dapp         | DApp        | 1,000 tx     | 5        | Users interacting with your app create txs      |
+| marketing    | Marketing   | 8,000 tx     | 40       | Campaigns bring in users who all transact       |
+| spammer      | Spammer     | 75,000 tx    | 300      | Bots flooding the mempool with transactions     |
+| exchange     | Exchange    | 500,000 tx   | 2,000    | High-frequency trading generates massive volume |
+| market_maker | Market Maker| 5,000,000 tx | 15,000   | Algo bots placing continuous orders             |
+| use_case     | Use Case    | 50,000,000 tx| 100,000  | Killer app driving organic mass adoption        |
 
 Cost scaling: `baseCost * 1.15^owned` (standard idle game curve)
 
-### Upgrades (~14 total)
-- 3 per building, unlocked at 1/5/25 owned: 2x / 5x / 10x multiplier on that building
-- 2 click-power upgrades: unlocked at 50 TPS (2x click) and 500 TPS (5x click)
+### Upgrades (~93 total)
+**Building upgrades — 11 per building, each gives ×1.5 on that building:**
+
+| Step | Unlock condition (units owned) |
+|------|-------------------------------|
+| 1    | 25                            |
+| 2    | 50                            |
+| 3    | 75                            |
+| 4    | 100                           |
+| 5    | 150                           |
+| 6    | 200                           |
+| 7    | 250                           |
+| 8    | 300                           |
+| 9    | 350                           |
+| 10   | 400                           |
+| 11   | 500                           |
+
+At max upgrades a fully upgraded building produces `1.5^11 ≈ 86×` its base TPS.
+
+**Click-power upgrades — 5 total, each ×2 click power:**
+
+| Step | Unlock at TPS  |
+|------|----------------|
+| 1    | 100            |
+| 2    | 1,000          |
+| 3    | 10,000         |
+| 4    | 100,000        |
+| 5    | 1,000,000      |
+
+Max click power at full upgrades: `2^5 = 32×` base.
 
 ---
 
@@ -52,9 +83,14 @@ Cost scaling: `baseCost * 1.15^owned` (standard idle game curve)
 │                             │
 │  [ Buildings ] [ Upgrades ] │  ← tab switcher
 │  ┌──────────────────────┐   │
-│  │ 🔑 Wallet  ×14  Buy  │   │
-│  │ ⚡ DApp    ×3   Buy  │   │
-│  │ 🖥 Node   ×0   Buy  │   │
+│  │ 🔑 Wallet      ×14  Buy  │
+│  │ 💧 Faucet      ×3   Buy  │
+│  │ ⚡ DApp        ×1   Buy  │
+│  │ 📣 Marketing   ×0   Buy  │
+│  │ 🤖 Spammer     ×0   Buy  │
+│  │ 🏦 Exchange    ×0   Buy  │
+│  │ 📈 Market Maker×0   Buy  │
+│  │ 🌍 Use Case    ×0   Buy  │
 │  └──────────────────────┘   │
 └─────────────────────────────┘
 ```
@@ -134,32 +170,20 @@ window.addEventListener('beforeunload', () => store.saveGame())
 Thresholds: K (1e3), M (1e6), B (1e9), T (1e12), Qa (1e15)
 Returns string like `"4.2M"`, `"1.34B"`
 
----
-
-## Implementation Steps
-
-1. **Scaffold project** — `npm create vite@latest nimclickr -- --template vue-ts`, add Pinia
-2. **Types & static data** — `types/index.ts`, `data/buildings.ts`, `data/upgrades.ts`
-3. **Pinia store** — full game state, all actions, save/load, computed tps/clickPower
-4. **Game loop composable** — tick + persistence intervals, beforeunload handler
-5. **Number format composable** — formatNum utility
-6. **ClickButton component** — tap handler, CSS ripple/particle animation
-7. **TpsDisplay component** — reactive TPS + total tx display
-8. **BuildingList component** — list of buildings, affordability highlight, buy button
-9. **UpgradeList component** — list of unlocked upgrades, buy button
-10. **TabBar component** — tab switcher between Buildings and Upgrades
-11. **App.vue layout** — wire all components, mount game loop
-12. **Global CSS** — cyberpunk theme, background pattern, glow effects, mobile viewport
+Optional `decimalsBelow` parameter: show 1 decimal place when value is below the threshold.
+- TPS display: `formatNum(tps, 10)` — 1 decimal below 10 TPS
+- Transaction balance: `formatNum(transactions, 100)` — 1 decimal below 100 tx
+- Building TPS contribution: `formatNum(tpsContrib, 10)` — 1 decimal below 10 TPS
 
 ---
 
 ## Verification
 
-1. `npm run dev` — app loads at localhost, no console errors
+1. `pnpm dev` — app loads at localhost, no console errors
 2. Tap button → transaction count increases, click particle fires
 3. Buy a Wallet → TPS increases from 0 to 0.1, transactions tick up passively
-4. Buy all 4 building types → TPS compounds correctly
-5. Buy upgrades → verify multipliers apply (wallet upgrade should 2x wallet TPS contribution)
+4. Buy all 8 building types → TPS compounds correctly
+5. Buy upgrades → verify multipliers apply (wallet upgrade should 1.5x wallet TPS contribution)
 6. Wait 10s → refresh page → verify progress restored from localStorage
 7. Close tab between 10s intervals → verify `beforeunload` save works
 8. Test on mobile viewport (375px) — layout fits without horizontal scroll, tap targets ≥44px
