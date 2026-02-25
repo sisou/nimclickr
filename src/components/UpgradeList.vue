@@ -28,27 +28,22 @@ function buy(id: UpgradeId) {
       Keep transacting to unlock upgrades…
     </p>
 
-    <div
+    <button
       v-for="row in rows"
       :key="row.id"
       class="upgrade-row"
       :class="{ affordable: row.canAfford }"
+      :disabled="!row.canAfford"
+      @click="buy(row.id)"
+      :aria-label="`Buy ${row.name} for ${formatNum(row.cost)} transactions`"
     >
       <span class="upgrade-emoji">{{ row.emoji }}</span>
       <div class="upgrade-info">
         <span class="upgrade-name">{{ row.name }}</span>
         <span class="upgrade-desc">{{ row.description }}</span>
       </div>
-      <button
-        class="buy-btn"
-        :class="{ affordable: row.canAfford }"
-        :disabled="!row.canAfford"
-        @click="buy(row.id)"
-        :aria-label="`Buy ${row.name} for ${formatNum(row.cost)} transactions`"
-      >
-        {{ formatNum(row.cost) }}
-      </button>
-    </div>
+      <span class="upgrade-cost">{{ formatNum(row.cost) }}</span>
+    </button>
   </div>
 </template>
 
@@ -75,14 +70,25 @@ function buy(id: UpgradeId) {
   border-radius: 8px;
   border: 1px solid #1a1a2e;
   background: #0d0d1a;
+  font-family: inherit;
+  text-align: left;
+  cursor: not-allowed;
+  width: 100%;
   transition:
     border-color 0.2s,
-    box-shadow 0.2s;
+    box-shadow 0.2s,
+    background 0.15s;
 }
 
 .upgrade-row.affordable {
   border-color: #bf5af244;
   box-shadow: 0 0 8px #bf5af211;
+  cursor: pointer;
+}
+
+.upgrade-row.affordable:active {
+  background: #1a003399;
+  box-shadow: 0 0 16px #bf5af233;
 }
 
 .upgrade-emoji {
@@ -117,37 +123,16 @@ function buy(id: UpgradeId) {
   text-overflow: ellipsis;
 }
 
-.buy-btn {
-  padding: 0.3rem 0.6rem;
-  border-radius: 6px;
-  border: 1px solid #333355;
-  background: #111122;
-  color: #666688;
-  font-size: 0.75rem;
+.upgrade-cost {
+  font-size: 0.85rem;
   font-weight: 700;
-  font-family: inherit;
-  cursor: not-allowed;
-  white-space: nowrap;
-  min-width: 54px;
-  text-align: center;
+  color: #666688;
   flex-shrink: 0;
-  transition:
-    background 0.15s,
-    border-color 0.15s,
-    color 0.15s,
-    box-shadow 0.15s;
+  white-space: nowrap;
 }
 
-.buy-btn.affordable {
-  border-color: #bf5af288;
-  background: #1a0033aa;
+.upgrade-row.affordable .upgrade-cost {
   color: #bf5af2;
-  cursor: pointer;
-  box-shadow: 0 0 8px #bf5af233;
-}
-
-.buy-btn.affordable:active {
-  background: #bf5af222;
-  box-shadow: 0 0 16px #bf5af255;
+  text-shadow: 0 0 8px #bf5af255;
 }
 </style>

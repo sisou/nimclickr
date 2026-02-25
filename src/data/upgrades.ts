@@ -18,7 +18,7 @@ function buildingUpgrades(): UpgradeDef[] {
       upgrades.push({
         id,
         name: `${building.name} Lv.${step}`,
-        description: `${building.name} TPS ×1.5 (requires ${requiredOwned} owned)`,
+        description: `${building.name} TPS ×1.5`,
         cost,
         buildingId: building.id as BuildingId,
         multiplier: 1.5,
