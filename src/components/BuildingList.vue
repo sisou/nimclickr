@@ -24,12 +24,16 @@ function buy(id: BuildingId) {
 
 <template>
   <div class="building-list">
-    <div
+    <button
       v-for="row in rows"
       :key="row.id"
       class="building-row"
       :class="{ affordable: row.canAfford, owned: row.owned > 0 }"
+      :disabled="!row.canAfford"
+      @click="buy(row.id)"
+      :aria-label="`Buy ${row.name} for ${formatNum(row.cost)} transactions`"
     >
+      <span class="building-owned">{{ row.owned }}</span>
       <span class="building-emoji">{{ row.emoji }}</span>
       <div class="building-info">
         <span class="building-name">{{ row.name }}</span>
@@ -38,19 +42,8 @@ function buy(id: BuildingId) {
         </span>
         <span class="building-desc" v-else>{{ row.description }}</span>
       </div>
-      <div class="building-right">
-        <span class="building-owned">×{{ row.owned }}</span>
-        <button
-          class="buy-btn"
-          :class="{ affordable: row.canAfford }"
-          :disabled="!row.canAfford"
-          @click="buy(row.id)"
-          :aria-label="`Buy ${row.name} for ${formatNum(row.cost)} transactions`"
-        >
-          {{ formatNum(row.cost) }}
-        </button>
-      </div>
-    </div>
+      <span class="building-cost">{{ formatNum(row.cost) }}</span>
+    </button>
   </div>
 </template>
 
@@ -70,9 +63,14 @@ function buy(id: BuildingId) {
   border-radius: 8px;
   border: 1px solid #1a1a2e;
   background: #0d0d1a;
+  font-family: inherit;
+  text-align: left;
+  cursor: not-allowed;
+  width: 100%;
   transition:
     border-color 0.2s,
-    box-shadow 0.2s;
+    box-shadow 0.2s,
+    background 0.15s;
   opacity: 0.6;
 }
 
@@ -85,6 +83,22 @@ function buy(id: BuildingId) {
   opacity: 1;
   border-color: #00f5ff44;
   box-shadow: 0 0 8px #00f5ff11;
+  cursor: pointer;
+}
+
+.building-row.affordable:active {
+  background: #00233399;
+  box-shadow: 0 0 16px #00f5ff33;
+}
+
+.building-owned {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #bf5af2;
+  min-width: 2rem;
+  text-align: center;
+  flex-shrink: 0;
+  text-shadow: 0 0 8px #bf5af255;
 }
 
 .building-emoji {
@@ -125,52 +139,16 @@ function buy(id: BuildingId) {
   text-overflow: ellipsis;
 }
 
-.building-right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.25rem;
-  flex-shrink: 0;
-}
-
-.building-owned {
-  font-size: 0.75rem;
-  color: #bf5af2;
+.building-cost {
+  font-size: 0.85rem;
   font-weight: 700;
-  min-width: 2rem;
-  text-align: right;
-}
-
-.buy-btn {
-  padding: 0.3rem 0.6rem;
-  border-radius: 6px;
-  border: 1px solid #333355;
-  background: #111122;
   color: #666688;
-  font-size: 0.75rem;
-  font-weight: 700;
-  font-family: inherit;
-  cursor: not-allowed;
+  flex-shrink: 0;
   white-space: nowrap;
-  min-width: 54px;
-  text-align: center;
-  transition:
-    background 0.15s,
-    border-color 0.15s,
-    color 0.15s,
-    box-shadow 0.15s;
 }
 
-.buy-btn.affordable {
-  border-color: #00f5ff88;
-  background: #002d3399;
+.building-row.affordable .building-cost {
   color: #00f5ff;
-  cursor: pointer;
-  box-shadow: 0 0 8px #00f5ff33;
-}
-
-.buy-btn.affordable:active {
-  background: #00f5ff22;
-  box-shadow: 0 0 16px #00f5ff55;
+  text-shadow: 0 0 8px #00f5ff55;
 }
 </style>
