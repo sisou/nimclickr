@@ -6,7 +6,7 @@ const THRESHOLDS: [number, string][] = [
   [1e3, 'K'],
 ]
 
-export function formatNum(n: number): string {
+export function formatNum(n: number, decimalsBelow = 0): string {
   if (!isFinite(n)) return '0'
   const abs = Math.abs(n)
 
@@ -19,7 +19,10 @@ export function formatNum(n: number): string {
     }
   }
 
-  // Below 1000 — show as integer
+  // Below 1000 — show 1 decimal if under the threshold, otherwise integer
+  if (decimalsBelow > 0 && abs < decimalsBelow) {
+    return n.toFixed(1)
+  }
   return Math.floor(n).toString()
 }
 

@@ -5,9 +5,9 @@ import { formatNum } from '../composables/useNumberFormat'
 
 const store = useGameStore()
 
-const tpsDisplay = computed(() => formatNum(store.tps))
+const tpsDisplay = computed(() => formatNum(store.tps, 10))
 const totalDisplay = computed(() => formatNum(store.totalTransactions))
-const balanceDisplay = computed(() => formatNum(store.transactions))
+const balanceDisplay = computed(() => formatNum(store.transactions, 100))
 const clickDisplay = computed(() => formatNum(store.clickPower))
 </script>
 
