@@ -15,7 +15,7 @@ const clickDisplay = computed(() => formatNum(store.clickPower))
   <div class="tps-display">
     <div class="tps-value">{{ tpsDisplay }} <span class="tps-label">TPS</span></div>
     <div class="tx-balance">⬡ {{ balanceDisplay }} tx</div>
-    <div class="tx-total">Total earned: {{ totalDisplay }} tx</div>
+    <div class="tx-total">Total sent: {{ totalDisplay }} tx</div>
     <div class="click-info">+{{ clickDisplay }} per tap</div>
   </div>
 </template>
@@ -45,7 +45,7 @@ const clickDisplay = computed(() => formatNum(store.clickPower))
     0 0 8px #bf5af2,
     0 0 20px #bf5af244;
   vertical-align: middle;
-  margin-left: 0.25rem;
+  margin-left: -0.5rem;
 }
 
 .tx-balance {
