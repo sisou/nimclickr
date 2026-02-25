@@ -1,7 +1,7 @@
 import type { BuildingId, UpgradeDef, UpgradeId } from '../types'
 import { BUILDINGS } from './buildings'
 
-const BUILDING_UNLOCK_STEPS: number[] = [25, 50, 75, 100, 150, 200, 250, 300, 350, 400, 500]
+const BUILDING_UNLOCK_STEPS: number[] = [15, 30, 50, 75, 100, 150, 200, 250, 300, 400, 500]
 
 /** Cost multiplier per building upgrade step (relative to base building cost) */
 const BUILDING_UPGRADE_COST_MULTIPLIERS: number[] = [10, 50, 150, 500, 1_500, 5_000, 15_000, 50_000, 150_000, 500_000, 1_500_000]

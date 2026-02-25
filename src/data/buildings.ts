@@ -67,7 +67,7 @@ export const BUILDINGS: BuildingDef[] = [
   },
 ]
 
-export const COST_SCALE = 1.15
+export const COST_SCALE = 1.10
 
 /** Compute the current cost to buy one more unit of a building */
 export function buildingCost(baseCost: number, owned: number): number {
