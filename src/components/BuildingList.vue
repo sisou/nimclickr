@@ -37,11 +37,11 @@ function buy(id: BuildingId) {
       <span class="building-owned">{{ row.owned }}</span>
       <span class="building-emoji">{{ row.emoji }}</span>
       <div class="building-info">
-        <span class="building-name">{{ row.name }}</span>
-        <span class="building-tps" v-if="row.owned > 0">
-          {{ formatNum(row.tpsContrib, 10) }} TPS
-        </span>
-        <span class="building-desc" v-else>{{ row.description }}</span>
+        <div class="building-name-row">
+          <span class="building-name">{{ row.name }}</span>
+          <span class="building-tps" v-if="row.owned > 0">{{ formatNum(row.tpsContrib, 10) }} TPS</span>
+        </div>
+        <span class="building-desc">{{ row.description }}</span>
       </div>
       <span class="building-cost">{{ formatNum(row.cost) }}</span>
     </button>
@@ -115,6 +115,12 @@ function buy(id: BuildingId) {
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
+}
+
+.building-name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
 .building-name {
