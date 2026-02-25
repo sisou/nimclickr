@@ -34,7 +34,7 @@ function buy(id: BuildingId) {
       <div class="building-info">
         <span class="building-name">{{ row.name }}</span>
         <span class="building-tps" v-if="row.owned > 0">
-          {{ formatNum(row.tpsContrib) }} TPS
+          {{ formatNum(row.tpsContrib, 10) }} TPS
         </span>
         <span class="building-desc" v-else>{{ row.description }}</span>
       </div>
