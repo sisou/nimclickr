@@ -1,8 +1,8 @@
-import { createApp } from 'vue'
+import { createVaporApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 import './style.css'
 
-const app = createApp(App)
+const app = createVaporApp(App)
 app.use(createPinia())
 app.mount('#app')
