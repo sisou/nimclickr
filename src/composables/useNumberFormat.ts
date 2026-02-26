@@ -13,8 +13,7 @@ export function formatNum(n: number, decimalsBelow = 0): string {
   for (const [threshold, suffix] of THRESHOLDS) {
     if (abs >= threshold) {
       const val = n / threshold
-      // Show up to 2 decimal places, strip trailing zeros
-      const formatted = val % 1 === 0 ? val.toFixed(0) : val.toFixed(2).replace(/\.?0+$/, '')
+      const formatted = val.toFixed(2)
       return `${formatted}${suffix}`
     }
   }
