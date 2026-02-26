@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup vapor lang="ts">
 import { computed } from 'vue'
 import { BUILDINGS } from '../data/buildings'
 import { useGameStore } from '../stores/game'

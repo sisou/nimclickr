@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup vapor lang="ts">
 import { ref } from 'vue'
 import { useGameLoop } from './composables/useGameLoop'
 import TpsDisplay from './components/TpsDisplay.vue'
