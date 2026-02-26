@@ -13,8 +13,8 @@ const clickDisplay = computed(() => formatNum(store.clickPower))
 
 <template>
   <div class="tps-display">
-    <div class="tps-value">{{ tpsDisplay }} <span class="tps-label">TPS</span></div>
-    <div class="tx-balance">⬡ {{ balanceDisplay }} tx</div>
+    <div class="tx-balance">{{ balanceDisplay }} <span class="tx-unit">tx</span></div>
+    <div class="tps-value">⬡ {{ tpsDisplay }} <span class="tps-label">TPS</span></div>
     <div class="tx-total">Total sent: {{ totalDisplay }} tx</div>
     <div class="click-info">+{{ clickDisplay }} per tap</div>
   </div>
@@ -26,9 +26,9 @@ const clickDisplay = computed(() => formatNum(store.clickPower))
   padding: 1rem 0 0.5rem;
 }
 
-.tps-value {
+.tx-balance {
   font-size: clamp(2.5rem, 10vw, 4rem);
-  font-weight: 900;
+  font-weight: 700;
   color: #00f5ff;
   text-shadow:
     0 0 10px #00f5ff,
@@ -38,21 +38,33 @@ const clickDisplay = computed(() => formatNum(store.clickPower))
   letter-spacing: -0.02em;
 }
 
-.tps-label {
+.tx-unit {
   font-size: 0.45em;
   color: #bf5af2;
   text-shadow:
     0 0 8px #bf5af2,
     0 0 20px #bf5af244;
   vertical-align: middle;
-  margin-left: -0.5rem;
+  margin-left: -0.3rem;
 }
 
-.tx-balance {
+.tps-value {
   font-size: clamp(1.1rem, 4vw, 1.4rem);
+  font-weight: 500;
   color: #e0e0ff;
-  margin-top: 0.3rem;
-  font-weight: 600;
+  opacity: 1;
+  margin-top: 0.2rem;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-shadow: none;
+}
+
+.tps-label {
+  font-size: 0.85em;
+  color: #e0e0ff;
+  text-shadow: none;
+  vertical-align: middle;
+  margin-left: -0.2rem;
 }
 
 .tx-total {
