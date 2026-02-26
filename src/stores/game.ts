@@ -62,7 +62,7 @@ export const useGameStore = defineStore('game', () => {
         multiplier *= upgrade.multiplier
       }
     }
-    return Math.max(1, tps.value * 0.5) * multiplier
+    return Math.max(1, tps.value * 0.1) * multiplier
   })
 
   /** Upgrades that have been unlocked (condition met) but not yet purchased */

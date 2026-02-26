@@ -41,10 +41,10 @@ function clickUpgrades(): UpgradeDef[] {
   return CLICK_UNLOCK_TPS.map((tpsThreshold, i) => ({
     id: `click_${i + 1}` as UpgradeId,
     name: `Click Power Lv.${i + 1}`,
-    description: `Click power ×1.25 (requires ${tpsThreshold.toLocaleString()} TPS)`,
+    description: `Click power ×1.5 (requires ${tpsThreshold.toLocaleString()} TPS)`,
     cost: CLICK_UPGRADE_COSTS[i],
     buildingId: null,
-    multiplier: 1.25,
+    multiplier: 1.5,
     unlockCondition: { type: 'tps' as const, value: tpsThreshold },
   }))
 }
