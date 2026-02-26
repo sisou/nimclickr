@@ -7,7 +7,7 @@ export const BUILDINGS: BuildingDef[] = [
     emoji: '🔑',
     baseCost: 10,
     baseTps: 0.1,
-    description: 'You sign transactions manually.',
+    description: 'Transactions are signed manually.',
   },
   {
     id: 'faucet',
@@ -15,7 +15,7 @@ export const BUILDINGS: BuildingDef[] = [
     emoji: '💧',
     baseCost: 100,
     baseTps: 0.5,
-    description: 'Drips free tokens — each drip is a transaction.',
+    description: 'Drips tokens, one tx at a time.',
   },
   {
     id: 'dapp',
@@ -23,7 +23,7 @@ export const BUILDINGS: BuildingDef[] = [
     emoji: '⚡',
     baseCost: 1_000,
     baseTps: 5,
-    description: 'Users interacting with your app create transactions.',
+    description: 'On-chain activity from app users.',
   },
   {
     id: 'marketing',
@@ -31,7 +31,7 @@ export const BUILDINGS: BuildingDef[] = [
     emoji: '📣',
     baseCost: 8_000,
     baseTps: 40,
-    description: 'Campaigns bring in users who all transact.',
+    description: 'Campaigns attract new users.',
   },
   {
     id: 'spammer',
@@ -39,7 +39,7 @@ export const BUILDINGS: BuildingDef[] = [
     emoji: '🤖',
     baseCost: 75_000,
     baseTps: 300,
-    description: 'Bots flooding the mempool with transactions.',
+    description: 'Bots flood the mempool with txs.',
   },
   {
     id: 'exchange',
@@ -47,7 +47,7 @@ export const BUILDINGS: BuildingDef[] = [
     emoji: '🏦',
     baseCost: 500_000,
     baseTps: 2_000,
-    description: 'High-frequency trading generates massive volume.',
+    description: 'High-frequency trading volume.',
   },
   {
     id: 'market_maker',
@@ -63,7 +63,7 @@ export const BUILDINGS: BuildingDef[] = [
     emoji: '🌍',
     baseCost: 50_000_000,
     baseTps: 100_000,
-    description: 'Killer app driving organic mass adoption.',
+    description: 'Killer app drives mass adoption.',
   },
 ]
 
