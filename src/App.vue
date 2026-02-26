@@ -12,6 +12,10 @@ useGameLoop()
 
 const store = useGameStore()
 const activeTab = ref<'buildings' | 'upgrades'>('buildings')
+
+function confirmReset() {
+  if (confirm('Reset all progress? This cannot be undone.')) store.resetGame()
+}
 </script>
 
 <template>
@@ -23,7 +27,7 @@ const activeTab = ref<'buildings' | 'upgrades'>('buildings')
       <!-- Header -->
       <header class="header">
         <h1 class="logo">⛓ NimClickr</h1>
-        <button class="reset-btn" @click="store.resetGame()" title="Reset game">↺</button>
+        <button class="reset-btn" @click="confirmReset" title="Reset game">↺</button>
       </header>
 
       <!-- Stats -->
