@@ -1,16 +1,16 @@
 import type { BuildingId, UpgradeDef, UpgradeId } from '../types'
 import { BUILDINGS } from './buildings'
 
-const BUILDING_UNLOCK_STEPS: number[] = [15, 30, 50, 75, 100, 150, 200, 250, 300, 400, 500]
+const BUILDING_UNLOCK_STEPS: number[] = [8, 16, 32, 64, 128, 256, 512, 1024, 2048]
 
 /** Cost multiplier per building upgrade step (relative to base building cost) */
-const BUILDING_UPGRADE_COST_MULTIPLIERS: number[] = [10, 50, 150, 500, 1_500, 5_000, 15_000, 50_000, 150_000, 500_000, 1_500_000]
+const BUILDING_UPGRADE_COST_MULTIPLIERS: number[] = [10, 50, 150, 500, 1_500, 5_000, 15_000, 50_000, 150_000]
 
 function buildingUpgrades(): UpgradeDef[] {
   const upgrades: UpgradeDef[] = []
 
   for (const building of BUILDINGS) {
-    for (let step = 1; step <= 11; step++) {
+    for (let step = 1; step <= 9; step++) {
       const id = `${building.id}_${step}` as UpgradeId
       const requiredOwned = BUILDING_UNLOCK_STEPS[step - 1]
       const cost = Math.floor(building.baseCost * BUILDING_UPGRADE_COST_MULTIPLIERS[step - 1])
@@ -18,10 +18,10 @@ function buildingUpgrades(): UpgradeDef[] {
       upgrades.push({
         id,
         name: `${building.name} Lv.${step}`,
-        description: `${building.name} TPS ×1.5`,
+        description: `${building.name} TPS ×2`,
         cost,
         buildingId: building.id as BuildingId,
-        multiplier: 1.5,
+        multiplier: 2,
         unlockCondition: {
           type: 'owned',
           buildingId: building.id as BuildingId,

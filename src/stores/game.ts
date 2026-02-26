@@ -54,15 +54,15 @@ export const useGameStore = defineStore('game', () => {
     return total
   })
 
-  /** Transactions earned per click */
+  /** Transactions earned per click — at least 1, scales with TPS (×click upgrades) */
   const clickPower = computed<number>(() => {
-    let power = 1
+    let multiplier = 1
     for (const upgrade of UPGRADES) {
       if (upgrade.buildingId === null && upgrades.value[upgrade.id].purchased) {
-        power *= upgrade.multiplier
+        multiplier *= upgrade.multiplier
       }
     }
-    return power
+    return Math.max(1, tps.value) * multiplier
   })
 
   /** Upgrades that have been unlocked (condition met) but not yet purchased */
